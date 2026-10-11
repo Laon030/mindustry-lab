@@ -19,3 +19,10 @@ Updated: 2026-10-11 (Asia/Seoul)
 - **NOT_VERIFIED_RUNTIME:** 이번 세션에 게임·모델·GUI를 실행하지 않았다. 게임 본체 build도 수행하지 않았다. API 기준 소스 checkout 및 plugin build 성공과 구분한다. 기존 최신 duel GUI / native Core 승리 / live 연구 v2 검증은 남아 있다.
 
 - **VERIFIED_REVIEW:** staged 110개 경로는 새 AgentBridge 패키지, 문서/규칙/ignore 및 game gitlink에 한정된다. 기존 팀 실행 소스는 변경하지 않았고 credential-pattern scan은 0건이다. 원본 Java의 trailing whitespace 21개는 소스 동일성/계약 hash를 보존하기 위해 유지했다. 해당 기존 공백만 제외한 diff check는 통과했다.
+
+## 개인 포크 업로드 및 새 clone 검증
+
+- **VERIFIED_REMOTE:** checkpoint `905e31c8e7650c184f46e169322e106f9da8b323`를 개인 `origin/feature/agentbridge-handoff`에 push했다. GitHub API에서 개인 fork parent=`time-to-think/mindustry-lab`을 확인했고 `git ls-remote`로 업로드 SHA 및 개인 develop=`1d274c3` 보존을 확인했다. 팀 저장소에 push/PR/merge하지 않았다.
+- **VERIFIED_CLONE:** 개인 GitHub feature branch를 별도 임시 디렉터리에 depth=1로 새 clone하고 `git submodule update --init --depth=1 --filter=blob:none`를 실행했다. 팀 URL에서 game=`c9686eb5d0ae5dd47ee02c40f99f7d5018ccbc8c`를 정상 checkout했고 AgentBridge 소스 존재 및 clean 상태를 확인했다. 증거 폴더는 `/private/tmp/mindustry-lab-clone-check-j754qk83/checkout`이다. 이는 clone 재현 검증이며 새 게임 실행이나 전체 engine build가 아니다.
+- 이 후속 기록도 같은 개인 feature branch에만 반영한다. 개인 원본과 이전 engine fork 기록은 보존한다. 새 개발 위치는 `/Users/andrew/capstone/mindustry-lab-laon`; AgentBridge 작업/테스트 폴더는 그 아래 `agentbridge/`다.
+- 기찬님께 보낼 협의 초안은 [인계 안내](AGENTBRIDGE_HANDOFF.md)에 저장했으며 발송하지 않았다. 다음은 서로의 실행 계약과 실험 조건을 맞추는 리뷰이며 팀 merge와 실제 GUI 검증은 별도 단계다.
