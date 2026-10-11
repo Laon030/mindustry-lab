@@ -1,0 +1,97 @@
+{
+  "benchmark_id": "memory-sensitive-logistics-v2",
+  "benchmark_version": 2,
+  "status": "contract_microcases_not_live_mindustry",
+  "negative_control": "experiments/logistics_benchmark.json",
+  "public_contract": {
+    "model": "ollama-cloud/qwen3.5:397b",
+    "generation": "contract-only-no-inference",
+    "executor": "proposal-only-v2",
+    "action_budget": 4,
+    "timeout_seconds": 60
+  },
+  "observation_rule": "Current local visibility only; remote survey and expired task reports are not an automatic archive. IDs, order, tick, budgets and resources must match within a paired case.",
+  "memory_conditions": ["NO_SCRATCHPAD", "STRUCTURED_SCRATCHPAD"],
+  "diagnostic_memory_inputs": ["none", "correct", "stale_or_incorrect"],
+  "context_semantics": "Fresh stateless request at every decision. No claimed context-loss treatment; reset counters do not measure erased history.",
+  "decision_contract": {
+    "intents": ["choose_candidate", "retry", "alternative", "inspect", "wait", "abandon"],
+    "policy_owner": "LLM",
+    "validator": "current identity, affordability, availability, busy status and schema only",
+    "all_decisions_consume_budget": true,
+    "strategic_preference_is_not_legality": true
+  },
+  "evaluation_contract": {
+    "location": "evaluator_only; never supplied to policy, validator or executor",
+    "next_choice_score": "Hand-authored counterfactual outcome utility; diagnostic only, not game success",
+    "task_success": "All required milestones AND accepted post-completion decision AND successful terminal record AND no unresolved failure or goal loss",
+    "legal_inspect_wait_abandon": "Executed/evaluated without rejection as a wrong strategy; timeout or unsatisfied objective is a separate outcome",
+    "memory_truth_labels": "Evaluator only; stale memories of the correct schema must not be rejected using oracle truth"
+  },
+  "cases": [
+    {
+      "id": "survey_preference",
+      "question": "Choose between two affordable buildable copper sites, prioritizing sustained delivery. Remote survey details are no longer visible from the core.",
+      "current_observation": {
+        "tick": 100, "resources": {"copper": 60}, "executor": {"busy": false},
+        "candidates": [{"id": "site-a", "cost": 20, "legal": true}, {"id": "site-b", "cost": 20, "legal": true}],
+        "visible_events": []
+      },
+      "histories": [
+        {
+          "id": "a_dense",
+          "events": [
+            {"subject": "site-a", "predicate": "survey_copper_tiles", "value": 4, "observed_tick": 40},
+            {"subject": "site-b", "predicate": "survey_copper_tiles", "value": 1, "observed_tick": 40}
+          ],
+          "expected_preference": {"intent": "choose_candidate", "target": "site-a"},
+          "outcome_utility": {"choose_candidate:site-a": 4, "choose_candidate:site-b": 1, "retry:site-a": 4, "retry:site-b": 1, "alternative:site-a": 4, "alternative:site-b": 1, "inspect:site-a": 0, "inspect:site-b": 0, "wait:": 0, "abandon:": 0}
+        },
+        {
+          "id": "b_dense",
+          "events": [
+            {"subject": "site-a", "predicate": "survey_copper_tiles", "value": 1, "observed_tick": 40},
+            {"subject": "site-b", "predicate": "survey_copper_tiles", "value": 4, "observed_tick": 40}
+          ],
+          "expected_preference": {"intent": "choose_candidate", "target": "site-b"},
+          "outcome_utility": {"choose_candidate:site-a": 1, "choose_candidate:site-b": 4, "retry:site-a": 1, "retry:site-b": 4, "alternative:site-a": 1, "alternative:site-b": 4, "inspect:site-a": 0, "inspect:site-b": 0, "wait:": 0, "abandon:": 0}
+        }
+      ]
+    },
+    {
+      "id": "failure_recovery",
+      "question": "Recover copper delivery after a remote trial. Both blueprint commands are legal. The core-local current view does not reveal the old failure cause or remote outlet connectivity.",
+      "current_observation": {
+        "tick": 100, "resources": {"copper": 60}, "executor": {"busy": false},
+        "candidates": [{"id": "route-a", "cost": 20, "legal": true}, {"id": "route-b", "cost": 20, "legal": true}],
+        "visible_events": []
+      },
+      "histories": [
+        {
+          "id": "transient_interruption",
+          "events": [
+            {"subject": "route-a", "predicate": "trial_failure", "value": "builder interruption; outlet connection verified", "observed_tick": 40},
+            {"subject": "route-b", "predicate": "trial_result", "value": "working longer route with slower delivery", "observed_tick": 40}
+          ],
+          "expected_preference": {"intent": "retry", "target": "route-a"},
+          "outcome_utility": {"choose_candidate:route-a": 4, "choose_candidate:route-b": 2, "retry:route-a": 4, "retry:route-b": 2, "alternative:route-a": 4, "alternative:route-b": 2, "inspect:route-a": 0, "inspect:route-b": 0, "wait:": 0, "abandon:": 0}
+        },
+        {
+          "id": "structural_failure",
+          "events": [
+            {"subject": "route-a", "predicate": "trial_failure", "value": "blueprint outlet disconnected; repeating same blueprint does not repair it", "observed_tick": 40},
+            {"subject": "route-b", "predicate": "trial_result", "value": "working longer route with slower delivery", "observed_tick": 40}
+          ],
+          "expected_preference": {"intent": "alternative", "target": "route-b"},
+          "outcome_utility": {"choose_candidate:route-a": 0, "choose_candidate:route-b": 2, "retry:route-a": 0, "retry:route-b": 2, "alternative:route-a": 0, "alternative:route-b": 2, "inspect:route-a": 0, "inspect:route-b": 0, "wait:": 0, "abandon:": 0}
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Utilities and histories are hand-authored contract fixtures, not calibrated Mindustry physics or empirical performance.",
+    "Inspect has immediate score zero but is legal and may be rational without reliable memory; no multi-step information-value experiment exists yet.",
+    "A future live adapter must expose only current visibility and operational legality, not remote topology/yield or history-derived rankings.",
+    "Current logistics v1 is fully observable and largely deterministic; it is retained as smoke/negative control, not used as this v2 executor."
+  ]
+}

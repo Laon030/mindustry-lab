@@ -1,0 +1,125 @@
+{
+  "benchmark_id": "autonomous-early-game-logistics-v1",
+  "benchmark_version": 1,
+  "mindustry_version": "v159.7",
+  "fixture": {
+    "save_path": "artifacts/autonomous-logistics-base.msav",
+    "sha256": "1a70fe390341fa4fed62b189053838a750762266d01f31606a159dfc24eabc4f",
+    "map": "Islands",
+    "team": "sharded",
+    "core": {
+      "block": "core-shard",
+      "footprint": [
+        [
+          158,
+          51
+        ],
+        [
+          158,
+          52
+        ],
+        [
+          158,
+          53
+        ],
+        [
+          159,
+          51
+        ],
+        [
+          159,
+          52
+        ],
+        [
+          159,
+          53
+        ],
+        [
+          160,
+          51
+        ],
+        [
+          160,
+          52
+        ],
+        [
+          160,
+          53
+        ]
+      ]
+    },
+    "resources": {
+      "copper": 0,
+      "lead": 0,
+      "graphite": 0,
+      "silicon": 0
+    },
+    "units": {
+      "mono": 1,
+      "poly": 1
+    },
+    "rules": {
+      "infinite_resources": false,
+      "instant_build": false,
+      "build_speed_multiplier": 1.0
+    }
+  },
+  "observation": {
+    "endpoints": [
+      "/state"
+    ],
+    "action_endpoint": "/action",
+    "views": [
+      "logistics-plan",
+      "logistics-status"
+    ],
+    "required_fields": [
+      "wave",
+      "tick",
+      "team",
+      "resources",
+      "cores",
+      "units",
+      "demo"
+    ],
+    "conditional_fields": [
+      "logistics"
+    ],
+    "api_inventory": "contracts/agentbridge_api.json",
+    "fixture_verification": "verify_initial_state consumes a normalized mock/fixture snapshot, NOT raw /state; map, full rules, four resources and unitCounts are not all exposed by current API.",
+    "manifest_revision": 2,
+    "correction": "Documentation/API alignment only; v1 gameplay, goal, budgets and original fixture hash unchanged."
+  },
+  "actions": [
+    "mine",
+    "build",
+    "move",
+    "wait"
+  ],
+  "planner_executor": {
+    "planner": "agent/logistics_planner.py",
+    "runtime": "agent/logistics_agent.py",
+    "verified_commit": "a5dd369",
+    "execution_scope": "These files describe the historical live demo. experiment.py uses MockLogisticsBackend, not this live executor."
+  },
+  "goal": "Autonomously bootstrap copper, place a legitimate mechanical drill on copper, connect it to the core with conveyors, verify copper delivery, and continue replanning without manual commands.",
+  "success_criteria": {
+    "bootstrap_copper_observed": true,
+    "mechanical_drill_completed": true,
+    "connected_conveyor_route_completed": true,
+    "core_copper_increase_after_flow": true,
+    "post_completion_replanning_observed": true
+  },
+  "budgets": {
+    "timeout_seconds": 360,
+    "action_budget": 80,
+    "safety_margin_copper": 10,
+    "context_reset_every_decisions": 2,
+    "semantics": {
+      "action_budget": "v1 mock counts synthetic mine/build commands; wait excluded; legacy live LogisticsRuntime does not enforce this manifest budget",
+      "timeout_seconds": "mock checked between blocking calls; not hard cancellation; legacy live uses --duration independently",
+      "context_reset_every_decisions": "stateless boundary hook, not actual context loss",
+      "seed": "mock metadata only; no game RNG or model seed applied"
+    }
+  }
+}

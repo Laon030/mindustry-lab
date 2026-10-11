@@ -1,0 +1,2 @@
+// Stable output name even when a fresh checkout has a different directory name.
+rootProject.name = 'MindustryAgentBridge'

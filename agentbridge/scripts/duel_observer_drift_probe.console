@@ -1,0 +1,9 @@
+# HEADLESS regression probe only; not part of the normal demo fixture.
+# After the standard fixture, execute the first js line ONCE while paused.
+# This synthetic noncommandable alpha has no human/network client.
+# A passive AI adapter avoids an invalid Player reset and suppresses AI attacks/movement.
+# No fighter is moved or spawned. This checks the guard predicate, not CLIENT input.
+js if(!Vars.state.isPaused())throw new Error('observer probe requires pause');var guardObserver=UnitTypes.alpha.spawn(Team.sharded,1272,416);guardObserver.controller(new JavaAdapter(Packages.mindustry.ai.types.FlyingAI,{updateUnit:function(){}}));print('GUARD_OBSERVER_READY id='+guardObserver.id+' commandable='+(guardObserver.controller() instanceof Packages.mindustry.ai.types.CommandAI)+' x='+guardObserver.x+' y='+guardObserver.y+' tick='+Vars.state.tick)
+# Execute this second line during the paused LLM call, before commands dispatch.
+# Direct position change is fault injection for the snapshot guard, not a demo action.
+js if(!Vars.state.isPaused())throw new Error('observer probe requires pause');guardObserver.set(guardObserver.x+8,guardObserver.y+8);print('GUARD_OBSERVER_DRIFT id='+guardObserver.id+' x='+guardObserver.x+' y='+guardObserver.y+' tick='+Vars.state.tick)

@@ -1,0 +1,5 @@
+# Execute after duel_gate5_fixture.console while the new world is still paused.
+# These are equal pre-match infrastructure/stock fixtures; unit production must
+# begin later through model-selected /duel/action produce -> InputHandler.tileConfig.
+js Vars.world.tile(151,55).setBlock(Blocks.largeSolarPanel,Team.sharded,0);Vars.world.tile(151,58).setBlock(Blocks.groundFactory,Team.sharded,0);Vars.world.tile(151,135).setBlock(Blocks.largeSolarPanel,Team.crux,0);Vars.world.tile(151,138).setBlock(Blocks.groundFactory,Team.crux,0);print('G6_INFRA '+Vars.world.tile(151,58).block().name+'/'+Vars.world.tile(151,138).block().name)
+js var fa=Vars.world.tile(151,58).build,fb=Vars.world.tile(151,138).build;fa.currentPlan=-1;fb.currentPlan=-1;fa.items.add(Items.silicon,10);fa.items.add(Items.lead,10);fb.items.add(Items.silicon,10);fb.items.add(Items.lead,10);print('G6_STOCK plan='+fa.currentPlan+'/'+fb.currentPlan+' silicon='+fa.items.get(Items.silicon)+'/'+fb.items.get(Items.silicon)+' lead='+fa.items.get(Items.lead)+'/'+fb.items.get(Items.lead))

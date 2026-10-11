@@ -1,0 +1,150 @@
+{
+  "inventory_version": 2,
+  "v1_source_checkpoint": "2d77541299cf6f83f15b2df26d62643c15d20f29",
+  "duel_extension_base_checkpoint": "6f3b827",
+  "binding": "127.0.0.1:8765",
+  "thread": "Core.app.post; game main thread; HTTP latch wait up to 5 seconds",
+  "endpoints": {
+    "/state": {
+      "method": "GET",
+      "query": {
+        "view": [
+          "logistics-plan",
+          "logistics-status"
+        ],
+        "tileX": "nonnegative integer; together with tileY; mutually exclusive with view",
+        "tileY": "nonnegative integer; together with tileX",
+        "radius": "integer 1..6 default 2; may be used alone; exclusive with view"
+      },
+      "active_required_fields": [
+        "wave",
+        "tick",
+        "team",
+        "resources",
+        "cores",
+        "units",
+        "demo"
+      ],
+      "conditional_fields": [
+        "logistics"
+      ],
+      "waiting_fields": [
+        "status",
+        "message"
+      ],
+      "response_status": {
+        "200": "active/waiting OR capture error/timeout JSON",
+        "400": "invalid query",
+        "405": "wrong method; empty body"
+      }
+    },
+    "/action": {
+      "method": "POST",
+      "request_common": {
+        "action": "move|mine|build",
+        "unitId": "integer"
+      },
+      "actions": {
+        "move": {
+          "required": [
+            "x",
+            "y"
+          ],
+          "types": "float world coordinates"
+        },
+        "mine": {
+          "required": [
+            "resource"
+          ],
+          "resources": [
+            "copper",
+            "lead",
+            "titanium",
+            "thorium"
+          ]
+        },
+        "build": {
+          "required": [
+            "block",
+            "tileX",
+            "tileY",
+            "rotation"
+          ],
+          "types": "block name, integer tile coordinates, rotation 0..3"
+        }
+      },
+      "response_status": {
+        "200": "success=true; command accepted, not completed",
+        "400": "success=false and error (including timeout/internal error)",
+        "405": "error: Method not allowed"
+      },
+      "response_optional_fields": [
+        "action",
+        "unitId",
+        "x",
+        "y",
+        "resource",
+        "block",
+        "tileX",
+        "tileY",
+        "rotation",
+        "error"
+      ]
+    },
+    "/duel/state": {
+      "method": "GET",
+      "contract": "DUEL_DEMO_OMNISCIENT_V0",
+      "active_required_fields": ["contract", "worldId", "tick", "paused", "gameOver", "teams"],
+      "team_fields": ["resources", "cores", "units", "economy", "production", "buildings"],
+      "teams": ["sharded", "crux"],
+      "response_status": {
+        "200": "active snapshot or waiting status",
+        "405": "wrong method"
+      }
+    },
+    "/duel/action": {
+      "method": "POST",
+      "actions": ["move", "attack", "mine", "build", "produce"],
+      "economy_scope": "mine supports copper; build supports one core-relative duo candidate with normal BuildPlan and copper cost",
+      "production_scope": "produce configures one pre-placed team Ground Factory for Dagger using InputHandler.tileConfig; vanilla recipe consumes factory silicon and lead after powered progress",
+      "request_common": ["team", "action", "unitIds"],
+      "ownership": "Every live commandable unit ID must belong to the requested team; Python coordinator validates agent-to-team identity",
+      "response_status": {
+        "200": "accepted command, not combat completion",
+        "400": "invalid team, unit, target, or payload",
+        "405": "wrong method",
+        "413": "request too large",
+        "503": "main-thread timeout; command outcome uncertain"
+      }
+    },
+    "/duel/control": {
+      "method": "POST",
+      "request_fields": ["worldId", "paused"],
+      "scope": "localhost-only bounded duel runner pause/unpause; world ID must match current world; main game thread only",
+      "response_status": {"200": "requested pause state applied", "400": "invalid world or request", "405": "wrong method", "503": "game thread timed out"}
+    }
+  },
+  "caveats": [
+    "No /units, /buildings or /tasks endpoint; no task_id or completion endpoint.",
+    "wait is Python-side only.",
+    "HTTP prefix matching may also route suffixed paths; canonical endpoints above are the supported contract.",
+    "Action parser uses substring extraction, not full JSON schema validation. Extra/duplicate/malformed fields are not reliably rejected.",
+    "Timeout does not cancel queued main-thread work.",
+    "Observation uses defaultTeam; action finds a Player for target unit team. No caller authorization or fog isolation.",
+    "StateCapture fields are current raw Bridge telemetry, not v2 public observation.",
+    "Duel endpoints are a controlled localhost demo; the caller-supplied team is not authenticated by Java. Only DuelCoordinator enforces agent-to-team identity.",
+    "Duel observation is omniscient and symmetric, not human-equivalent fog-of-war."
+  ],
+  "source_sha256": {
+    "src/agentbridge/ActionHandler.java": "96414056c58e1800ef9f2358d5ed4af58a4fef10279056f557af9b341e07f97f",
+    "src/agentbridge/ActionHttpHandler.java": "8f968230097eda0d5f63e35cca992687cd08041a1f78f497fb11cf8b28a68e7d",
+    "src/agentbridge/AgentBridgePlugin.java": "d5261de85b19481f8f609eb3363ff85f13769fe84468cd0777f6c903f492c155",
+    "src/agentbridge/DemoObservation.java": "420004acc3105f2060d5eee876f0eeb154999c36a0a8f8a620dca10b49ee0fcf",
+    "src/agentbridge/DuelHttpHandler.java": "4455d3ea2ca11aaa4bb8e1760bb780630d4fdbd7cfe97a06add2b4496437d9c3",
+    "src/agentbridge/DuelControlHandler.java": "01bc3ca3436e9cf4ad741f197229daee548b6b4bdf6200f3c8d7dc124cbda4df",
+    "src/agentbridge/DuelStateCapture.java": "608281f2fa2948f7cdb9773e287058e18a6c5ed5f1acac27dedf4a1d8ca75432",
+    "src/agentbridge/LogisticsObservation.java": "4416f50d1c3a4dba7ebf2c1af946f09da1ca43da0d08a2ddf0da41266044f284",
+    "src/agentbridge/StateCapture.java": "fe52721545fb9a08ad8e12f813ff3a6de46dea6d4bb39ab3da89fac120386598",
+    "src/agentbridge/StateHttpServer.java": "b704d4c740c60a3dcc4f13b894f6eae0cd9b764e57b8c6ef968f1379e91037b0"
+  }
+}

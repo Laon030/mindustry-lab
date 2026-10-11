@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "benchmark_id": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "mindustry_version": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "python_version": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "java_version": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "model_identifier": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "exact_model_revision": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "provider_identifier": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "provider_version": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "runtime_identifier": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "runtime_version": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "thinking_setting": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "episode_id": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "run_id": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "executor_revision": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "observation_contract_version": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "benchmark_version": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "scratchpad_schema_version": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "max_output_tokens": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "action_budget": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "decision_budget": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "seed": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "dirty_worktree": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "actual_context_loss": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "temperature": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "timeout_seconds": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "top_p": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "git_commit": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "agentbridge_jar_sha256": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "fixture_sha256": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "prompt_sha256": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "memory_condition": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "timeout_enforcement": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "action_budget_unit": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  },
+  "seed_scope": {
+    "status": "unknown",
+    "value": null,
+    "source": "template only; collect from actual episode, not an executed run"
+  }
+}

@@ -1,0 +1,12 @@
+# Run line by line in 1번 SERVER on the isolated Java 17 v159.7 server.
+# This is pre-match terrain/core/unit setup, never evidence of in-match building or production.
+# If already hosting, issue `stop` once before these lines.
+config autoPause off
+config allowCustomClients true
+host Islands sandbox
+pause on
+js Vars.state.rules.pvp=true;Vars.state.rules.waves=false;Vars.state.rules.pvpAutoPause=false;Vars.state.rules.unitCapVariable=false;Vars.state.rules.unitCap=20;Vars.state.rules.infiniteResources=false;Vars.state.rules.instantBuild=false;print('G5_RULES waves='+Vars.state.rules.waves+' tick='+Vars.state.tick)
+js for(let x=143;x<=175;x++)for(let y=36;y<=68;y++){let t=Vars.world.tile(x,y);if(t.block()!=Blocks.coreShard)t.setBlock(Blocks.air);t.setFloor(Blocks.moss);t.setOverlay(Blocks.air)}print('G5_ZONE_A')
+js for(let x=143;x<=175;x++)for(let y=116;y<=148;y++){let t=Vars.world.tile(x,y);t.setBlock(Blocks.air);t.setFloor(Blocks.moss);t.setOverlay(Blocks.air)}print('G5_ZONE_B')
+js for(let cy of [52,132])for(let x=166;x<=170;x++)for(let y=cy-2;y<=cy+2;y++)Vars.world.tile(x,y).setOverlay(Blocks.oreCopper);Vars.world.tile(159,132).setBlock(Blocks.coreShard,Team.crux,0);Events.fire(new EventType.WorldLoadEvent());Team.sharded.core().items.set(Items.copper,0);Team.crux.core().items.set(Items.copper,0);print('G5_BASE '+Team.sharded.data().cores.size+'/'+Team.crux.data().cores.size)
+js var sm=UnitTypes.mono.spawn(Team.sharded,1280,440),sp=UnitTypes.poly.spawn(Team.sharded,1240,440),cm=UnitTypes.mono.spawn(Team.crux,1280,1080),cp=UnitTypes.poly.spawn(Team.crux,1240,1080);var sa=Player.create(),ca=Player.create();sa.team(Team.sharded);ca.team(Team.crux);InputHandler.setUnitStance(sa,[sp.id],UnitStance.holdPosition,true);InputHandler.setUnitStance(ca,[cp.id],UnitStance.holdPosition,true);print('G5_READY '+sm.id+','+sp.id+','+cm.id+','+cp.id)

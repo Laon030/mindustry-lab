@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "bundle_distribution": "Not published. Original save/logs require custodian handoff; no download URL is invented.",
+  "artifacts": [
+    {
+      "id": "logistics-save",
+      "bundle_path": "autonomous-logistics-base.msav",
+      "role": "exact historical initial fixture",
+      "sha256": "1a70fe390341fa4fed62b189053838a750762266d01f31606a159dfc24eabc4f",
+      "tracked": false,
+      "source_or_restore": "Obtain original save from project custodian. LOGISTICS_DEMO.md describes creating an equivalent scenario, NOT byte-identical reconstruction."
+    },
+    {
+      "id": "verified-bridge-jar",
+      "bundle_path": "MindustryAgentBridge.jar",
+      "role": "historical runtime-tested plugin",
+      "sha256": "60c79393e5cddf855e5baf570537198cf21387c119f14f479ae94769ffbe5def",
+      "tracked": false,
+      "source_or_restore": "Obtain original binary from custodian for exact historical reproduction; build current source for new artifact and record its hash separately."
+    },
+    {
+      "id": "server-jar",
+      "bundle_path": "server-release.jar",
+      "role": "v159.7 dedicated server",
+      "sha256": "e41289c32bcf765eb50fa131e6b515d741e20f7843fb567d3aa949e7461f22ab",
+      "tracked": false,
+      "source_or_restore": "https://github.com/Anuken/Mindustry/releases/tag/v159.7 ; compare hash to detect any binary difference."
+    },
+    {
+      "id": "logistics-headless-20260909-verified.jsonl",
+      "bundle_path": "logs/logistics-headless-20260909-verified.jsonl",
+      "role": "historical evidence; not needed for unit tests/build",
+      "sha256": "095592cf09b0f107c9b866dc775f0fac7c18f5139948c4246545a28f0d7fcb86",
+      "tracked": false,
+      "source_or_restore": "Request immutable historical evidence bundle from project custodian. A rerun creates new evidence, not the original file."
+    },
+    {
+      "id": "logistics-headless-20260909-server.log",
+      "bundle_path": "logs/logistics-headless-20260909-server.log",
+      "role": "historical evidence; not needed for unit tests/build",
+      "sha256": "36186dfad9abdee484456bf6ce2352be5240237323734310e66ad57d6979d995",
+      "tracked": false,
+      "source_or_restore": "Request immutable historical evidence bundle from project custodian. A rerun creates new evidence, not the original file."
+    },
+    {
+      "id": "logistics-gui-20260909.jsonl",
+      "bundle_path": "logs/logistics-gui-20260909.jsonl",
+      "role": "historical evidence; not needed for unit tests/build",
+      "sha256": "754c47e72a2ed3323821a2d9281f0cf374524c7416705874169c2e10e60b8577",
+      "tracked": false,
+      "source_or_restore": "Request immutable historical evidence bundle from project custodian. A rerun creates new evidence, not the original file."
+    },
+    {
+      "id": "logistics-gui-20260909-server.log",
+      "bundle_path": "logs/logistics-gui-20260909-server.log",
+      "role": "historical evidence; not needed for unit tests/build",
+      "sha256": "078cca83964faf346993d7cc44444257c892f7b4ad932316db38a0c78b0c1943",
+      "tracked": false,
+      "source_or_restore": "Request immutable historical evidence bundle from project custodian. A rerun creates new evidence, not the original file."
+    },
+    {
+      "id": "gui-vertical-slice-20260909.jsonl",
+      "bundle_path": "logs/gui-vertical-slice-20260909.jsonl",
+      "role": "historical evidence; not needed for unit tests/build",
+      "sha256": "79baa0d104f867bd73e58e79d2f4e71b73144db2013b1ab795203f64ab33d834",
+      "tracked": false,
+      "source_or_restore": "Request immutable historical evidence bundle from project custodian. A rerun creates new evidence, not the original file."
+    },
+    {
+      "id": "vertical-slice-20260908-mining-build.jsonl",
+      "bundle_path": "logs/vertical-slice-20260908-mining-build.jsonl",
+      "role": "historical evidence; not needed for unit tests/build",
+      "sha256": "9963d1b0bbec7df6debe4ed70e8faa8d925b1a71c3d16d6da04a1929bdba790d",
+      "tracked": false,
+      "source_or_restore": "Request immutable historical evidence bundle from project custodian. A rerun creates new evidence, not the original file."
+    },
+    {
+      "id": "mindustry-dependency",
+      "bundle_path": "Mindustry-v159.7.jar",
+      "role": "compile-only API dependency",
+      "sha256": "fe2784bb2e21b6f534260c209322ecfd1b08639f905efadeaf31c578c8ef5f53",
+      "tracked": false,
+      "source_or_restore": "Gradle downloads dependencies.jar from https://github.com/Anuken/Mindustry/releases/download/v159.7/dependencies.jar ; verification-metadata.xml verifies digest."
+    }
+  ]
+}

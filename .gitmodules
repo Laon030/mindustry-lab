@@ -1,0 +1,3 @@
+[submodule "mindustry"]
+	path = game
+	url = https://github.com/time-to-think/mindustry.git

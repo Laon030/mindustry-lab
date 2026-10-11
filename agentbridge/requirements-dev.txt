@@ -1,0 +1,2 @@
+# CPython 3.13.5. Runtime, contract tests, and verification helpers use stdlib only.
+# There are no pip packages to install. Keep this explicit for offline setup/CI.

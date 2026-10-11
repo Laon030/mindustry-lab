@@ -1,0 +1,4 @@
+# Run these js lines ONCE per dedicated-server process, after the mod is loaded.
+# They only log vanilla events; fixture setup and game mechanics are unchanged.
+js Events.on(EventType.UnitCreateEvent,e=>{if(e.unit.type==UnitTypes.dagger)print('DEMO_CREATE team='+e.unit.team.name+' id='+e.unit.id+' spawner='+(e.spawner==null?'none':e.spawner.block.name)+' tick='+Vars.state.tick)});print('DEMO_CREATE_LISTENER_READY')
+js Events.on(EventType.UnitDamageEvent,e=>{if(e.unit.type==UnitTypes.dagger)print('DEMO_DAMAGE team='+e.unit.team.name+' id='+e.unit.id+' hp='+e.unit.health+' tick='+Vars.state.tick)});Events.on(EventType.UnitDestroyEvent,e=>{if(e.unit.type==UnitTypes.dagger)print('DEMO_DESTROY team='+e.unit.team.name+' id='+e.unit.id+' tick='+Vars.state.tick)});print('DEMO_COMBAT_LISTENERS_READY')

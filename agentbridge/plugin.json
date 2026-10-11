@@ -1,0 +1,7 @@
+{
+  "name": "AgentBridge",
+  "author": "AgentBridge Team",
+  "main": "agentbridge.AgentBridgePlugin",
+  "description": "JSON state bridge for external AI agent",
+  "version": 1.0
+}

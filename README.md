@@ -1,5 +1,17 @@
 # Mindustry LLM RTS Agent
 
+## 개인 포크 협업 및 AgentBridge 인계
+
+현재 팀 프로젝트 저장소는 `time-to-think/mindustry-lab`이다. 게임 본체는
+`game/` submodule로 가져오며, LLM·연구 코드는 이 lab에서 관리한다.
+
+- `game/`: 팀 Mindustry 소스, **v159.7** commit에 고정. 게임 코드를 수정하는 작업은 별도 engine 개인 포크에서 진행한다.
+- `agentbridge/`: Laon030의 연구·duel 패키지. 기존 팀 플러그인과 독립 실행한다.
+- 기존 `plugin/`, `client-plugin/`, `mindustry_agent/`: 아래 README의 팀 baseline이다.
+
+먼저 [개인 fork → clone → test/build → 검토 안내](docs/AGENTBRIDGE_HANDOFF.md)를 읽는다.
+두 bridge가 같은 `127.0.0.1:8765`를 사용하므로 동시에 실행하지 않는다.
+
 이 저장소는 Mindustry 본체와 분리된 캡스톤 프로젝트용 LLM RTS 에이전트입니다. `LLM → 게임 상태 → 판단 → 명령 → 행동` 루프와 GLM 대 DeepSeek 대전 모드를 구현하며, Mindustry v159.7 headless 서버 플러그인이 게임 상태와 행동 API를 제공합니다.
 
 ## 현재 구현 범위

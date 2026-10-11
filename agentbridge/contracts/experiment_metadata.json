@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "format": "field-status-contract-v1",
+  "description": "Specification only; current runner is not wired to emit this complete envelope. All listed fields are mandatory. Unknown values are never zero-filled.",
+  "fields": {
+    "benchmark_id": {
+      "type": "string"
+    },
+    "mindustry_version": {
+      "type": "string"
+    },
+    "python_version": {
+      "type": "string"
+    },
+    "java_version": {
+      "type": "string"
+    },
+    "model_identifier": {
+      "type": "string"
+    },
+    "exact_model_revision": {
+      "type": "string"
+    },
+    "provider_identifier": {
+      "type": "string"
+    },
+    "provider_version": {
+      "type": "string"
+    },
+    "runtime_identifier": {
+      "type": "string"
+    },
+    "runtime_version": {
+      "type": "string"
+    },
+    "thinking_setting": {
+      "type": "string"
+    },
+    "episode_id": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "executor_revision": {
+      "type": "string"
+    },
+    "observation_contract_version": {
+      "type": "string"
+    },
+    "benchmark_version": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "scratchpad_schema_version": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "max_output_tokens": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "action_budget": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "decision_budget": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "dirty_worktree": {
+      "type": "boolean"
+    },
+    "actual_context_loss": {
+      "type": "boolean"
+    },
+    "temperature": {
+      "type": "number",
+      "minimum": 0
+    },
+    "timeout_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "top_p": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "git_commit": {
+      "type": "string",
+      "pattern": "[0-9a-f]{40}"
+    },
+    "agentbridge_jar_sha256": {
+      "type": "string",
+      "pattern": "[0-9a-f]{64}"
+    },
+    "fixture_sha256": {
+      "type": "string",
+      "pattern": "[0-9a-f]{64}"
+    },
+    "prompt_sha256": {
+      "type": "string",
+      "pattern": "[0-9a-f]{64}"
+    },
+    "memory_condition": {
+      "type": "string",
+      "enum": [
+        "no_scratchpad",
+        "structured_scratchpad"
+      ]
+    },
+    "timeout_enforcement": {
+      "type": "string",
+      "enum": [
+        "contract_only",
+        "between_calls",
+        "hard_deadline"
+      ]
+    },
+    "action_budget_unit": {
+      "type": "string",
+      "enum": [
+        "game_commands",
+        "policy_decisions"
+      ]
+    },
+    "seed_scope": {
+      "type": "string",
+      "enum": [
+        "metadata_only",
+        "environment",
+        "model",
+        "environment_and_model"
+      ]
+    }
+  },
+  "availability": [
+    "known",
+    "unknown",
+    "unavailable",
+    "not_applicable"
+  ]
+}

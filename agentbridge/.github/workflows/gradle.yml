@@ -1,0 +1,44 @@
+name: Java and Python checks
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  buildJar:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v5
+      with:
+        distribution: 'temurin'
+        java-version: 17
+    - name: Build plugin jar
+      run: ./gradlew --no-daemon jar
+    - name: Upload built jar file
+      uses: actions/upload-artifact@v7
+      with:
+        archive: false
+        name: MindustryAgentBridge
+        path: build/libs/MindustryAgentBridge.jar
+        if-no-files-found: error
+
+  pythonContracts:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version-file: '.python-version'
+    # No third-party Python dependencies: a package cache would cache nothing.
+    - name: Install declared test dependencies offline
+      run: python -m pip install --no-index -r requirements-dev.txt
+    - name: Verify pinned Python
+      run: python scripts/check_environment.py --python-only
+    - name: Compile Python sources without importing gameplay entrypoints
+      run: python -m compileall -q agent research scripts tests experiment.py
+    - name: Research and contract unit tests
+      run: python -m unittest discover -s tests -v
