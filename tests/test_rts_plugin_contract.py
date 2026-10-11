@@ -1,0 +1,69 @@
+import unittest
+from pathlib import Path
+
+
+class RtsPluginContractTest(unittest.TestCase):
+    def test_recent_unit_combat_tracks_unit_and_building_hits(self) -> None:
+        self.assertIn("Events.on(UnitDamageEvent.class", self.source)
+        self.assertIn("Events.on(BuildDamageEvent.class", self.source)
+        self.assertIn('root.put("recent_unit_combat"', self.source)
+        self.assertIn('"raw_damage"', self.source)
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        root = Path(__file__).resolve().parents[1]
+        cls.source = (root / "plugin" / "src" / "main" / "java" / "dev" / "capstone" /
+                      "mindustry" / "MindustryAgentPlugin.java").read_text(encoding="utf-8")
+
+    def test_dead_units_are_destroyed_over_the_network(self) -> None:
+        self.assertIn("deadUnits.each(unit -> Call.unitDestroy(unit.id))", self.source)
+        self.assertNotIn("deadUnits.each(Unit::remove)", self.source)
+
+    def test_control_points_provide_benefits_but_not_victory(self) -> None:
+        self.assertIn("RTS_CONTROL_NORTH_PRODUCTION_SPEED_BONUS = 0.10d", self.source)
+        self.assertIn("RTS_CONTROL_REPAIR_MAX_HEALTH_PER_SECOND = 0.01d", self.source)
+        self.assertIn("RTS_CONTROL_STRUCTURE_REPAIR_MAX_HEALTH_PER_SECOND = 0.005d", self.source)
+        self.assertIn("RTS_CONTROL_NEUTRAL_LOCK_SECONDS = 5d", self.source)
+        self.assertIn("rtsProductionSpeedMultiplier", self.source)
+        self.assertIn("unit.heal", self.source)
+        self.assertIn("building.heal", self.source)
+        self.assertIn("rtsTacticalIntelligenceState", self.source)
+        self.assertIn("neutralized RTS control point", self.source)
+        self.assertIn("activeRtsControlPointCount", self.source)
+        self.assertIn("Math.min(1.5d", self.source)
+        self.assertNotIn('gameEndReason = "all_three_control_points_', self.source)
+        self.assertNotIn("income_items", self.source)
+
+    def test_training_can_stage_units_in_persistent_squads(self) -> None:
+        self.assertIn('"training_squad_requires_rally"', self.source)
+        self.assertIn("order.squadId", self.source)
+        self.assertIn("squad.unitIds.add(unit.id)", self.source)
+        self.assertIn("RTS_EMPTY_SQUAD_RETENTION_TICKS", self.source)
+        self.assertIn('row.put("operation_phase", operationPhase)', self.source)
+        self.assertIn('row.put("ready_for_new_order", readyForNewOrder)', self.source)
+
+    def test_pending_squad_can_receive_a_standing_order(self) -> None:
+        self.assertIn("acceptsPendingStandingOrder", self.source)
+        self.assertIn("useExistingMembership && requestedUnitIds.isEmpty()", self.source)
+        self.assertIn('result.put("standing_order_registered_for_pending_units"', self.source)
+        self.assertIn('row.put("standing_order_registered_without_live_members"', self.source)
+        self.assertIn("pendingReinforcements", self.source)
+
+    def test_core_defender_uses_visible_respawn_cooldown(self) -> None:
+        self.assertIn("CORE_DEFENDER_RESPAWN_DELAY_TICKS = 12d * 60d", self.source)
+        self.assertIn("Math.max(Player.deathDelay, CORE_DEFENDER_RESPAWN_DELAY_TICKS)", self.source)
+        self.assertIn('value.put("respawn_seconds_remaining"', self.source)
+
+    def test_game_thread_state_requests_allow_serial_snapshot_work(self) -> None:
+        self.assertIn("GAME_THREAD_REQUEST_TIMEOUT_SECONDS = 20", self.source)
+        self.assertIn("future.get(GAME_THREAD_REQUEST_TIMEOUT_SECONDS", self.source)
+
+    def test_showcase_uses_tactical_terrain_v3(self) -> None:
+        self.assertIn("symmetric_three_lane_tactical_showcase_v3", self.source)
+        self.assertIn("placeMirroredXTerrainRect", self.source)
+        self.assertIn("long southern S-bend rear approach", self.source)
+        self.assertIn("air-only shortcuts across the neutral ridge", self.source)
+
+
+if __name__ == "__main__":
+    unittest.main()
