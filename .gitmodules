@@ -1,0 +1,4 @@
+[submodule "mindustry"]
+	path = mindustry
+	url = https://github.com/time-to-think/mindustry.git
+	branch = develop

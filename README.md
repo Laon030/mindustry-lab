@@ -2,6 +2,8 @@
 
 이 저장소는 Mindustry 본체와 분리된 캡스톤 프로젝트용 LLM RTS 에이전트입니다. `LLM → 게임 상태 → 판단 → 명령 → 행동` 루프와 GLM 대 DeepSeek 대전 모드를 구현하며, Mindustry v159.7 headless 서버 플러그인이 게임 상태와 행동 API를 제공합니다.
 
+Repository ownership and submodule setup: [repository layout](docs/repository-layout.md).
+
 ## 현재 구현 범위
 
 - 상태: 맵/웨이브/tick, 코어 크기·점유 타일·체력·자원, 건물의 재고·효율·생산물, 아군·적 유닛 타일 좌표, 적 스폰, 주변 광물
